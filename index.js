@@ -19,6 +19,8 @@ app.get("/", async (req, res) => {
 
 // 更新计数
 app.post("/api/count", async (req, res) => {
+  console.log("req:", req);
+  console.log("res:", res);
   const { action } = req.body;
   if (action === "inc") {
     await Counter.create();
@@ -35,6 +37,8 @@ app.post("/api/count", async (req, res) => {
 
 // 获取计数
 app.get("/api/count", async (req, res) => {
+  console.log("req:", req);
+  console.log("res:", res);
   const result = await Counter.count();
   res.send({
     code: 0,
