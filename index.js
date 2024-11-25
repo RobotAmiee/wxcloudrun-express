@@ -55,8 +55,7 @@ app.get("/api/wx_openid", async (req, res) => {
 });
 
 app.post("/api/send-template", async (req, res) => {
-  console.log("req:", req);
-  console.log("res:", res);
+  console.log("========req:", req);
   const { openid, template_id, url, data, appid, pagepath } = req.body;
 
   if (!openid || !template_id || !data) {
@@ -78,6 +77,8 @@ app.post("/api/send-template", async (req, res) => {
     };
 
     const response = await axios.post(apiUrl, payload);
+    console.log("========response:", response);
+
     const result = response.data;
 
     if (result.errcode === 0) {
