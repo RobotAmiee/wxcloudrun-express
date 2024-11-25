@@ -76,10 +76,14 @@ app.post("/api/send-template", async (req, res) => {
       pagepath, // 跳小程序 path
     };
 
+    console.log("========axios:", axios);
+
     const response = await axios.post(apiUrl, payload);
     console.log("========response:", response);
 
     const result = response.data;
+    console.log("========result:", result);
+
 
     if (result.errcode === 0) {
       res.send({ success: true, msgid: result.msgid });
