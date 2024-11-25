@@ -56,7 +56,7 @@ app.get("/api/wx_openid", async (req, res) => {
 
 app.post("/api/send-template", async (req, res) => {
   console.log("========req:", req);
-  const { openid, template_id, url, data, appid, pagepath } = req.body;
+  const { openid, template_id, url, data, miniprogram } = req.body;
 
   if (!openid || !template_id || !data) {
     return res.status(400).send('Missing required parameters');
@@ -75,8 +75,7 @@ app.post("/api/send-template", async (req, res) => {
       template_id,
       url, // 模板跳转链接，可选
       data, // 模板数据
-      appid, // 跳小程序 id
-      pagepath, // 跳小程序 path
+      miniprogram, // 模板跳转小程序，可选
     };
 
     console.log("========payload:", payload);
