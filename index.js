@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const { init: initDB, Counter } = require("./db");
+const axios = require("axios");
 
 const logger = morgan("tiny");
 
@@ -50,6 +51,42 @@ app.get("/api/count", async (req, res) => {
 app.get("/api/wx_openid", async (req, res) => {
   if (req.headers["x-wx-source"]) {
     res.send(req.headers["x-wx-openid"]);
+  }
+});
+
+app.post("/api/send-template", async (req, res) => {
+  console.log("req:", req);
+  console.log("res:", res);
+  const { openid, template_id, url, data, appid, pagepath } = req.body;
+
+  if (!openid || !template_id || !data) {
+    return res.status(400).send('Missing required parameters');
+  }
+
+  try {
+    // const token = await getAccessToken();
+    // const apiUrl = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${token}`;
+    const apiUrl = "https://api.weixin.qq.com/cgi-bin/message/template/send";
+
+    const payload = {
+      touser: openid,
+      template_id,
+      url, // 模板跳转链接，可选
+      data, // 模板数据
+      appid, // 跳小程序 id
+      pagepath, // 跳小程序 path
+    };
+
+    const response = await axios.post(apiUrl, payload);
+    const result = response.data;
+
+    if (result.errcode === 0) {
+      res.send({ success: true, msgid: result.msgid });
+    } else {
+      res.status(500).send({ success: false, errmsg: result.errmsg });
+    }
+  } catch (error) {
+    res.status(500).send({ success: false, error: error.message });
   }
 });
 
