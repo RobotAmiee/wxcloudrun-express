@@ -67,6 +67,9 @@ app.post("/api/send-template", async (req, res) => {
     // const apiUrl = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${token}`;
     const apiUrl = "https://api.weixin.qq.com/cgi-bin/message/template/send";
 
+    console.log("========apiUrl:", apiUrl);
+
+
     const payload = {
       touser: openid,
       template_id,
@@ -75,6 +78,8 @@ app.post("/api/send-template", async (req, res) => {
       appid, // 跳小程序 id
       pagepath, // 跳小程序 path
     };
+
+    console.log("========payload:", payload);
 
     console.log("========axios:", axios);
 
