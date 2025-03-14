@@ -54,6 +54,12 @@ app.get("/api/wx_openid", async (req, res) => {
   }
 });
 
+// 支付宝支付回调
+app.post("/api/alipay_callback", async (req, res) => {
+  console.log("支付宝支付回调", req.body);
+  res.send("success");
+});
+
 app.post("/api/send-template", async (req, res) => {
   console.log("========req:", req);
   const { openid, template_id, url, data, miniprogram } = req.body;
